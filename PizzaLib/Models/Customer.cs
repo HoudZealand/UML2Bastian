@@ -17,7 +17,7 @@ namespace PizzaLib.Models
             }
         }
         public string Address { get; set; }
-        public bool ClubMember { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool ClubMember { get; set; }
 
         public int Id { get; }
 
@@ -30,6 +30,11 @@ namespace PizzaLib.Models
             Mobile = mobile;
             Address = address;
             Id = NewID;
+        }
+
+        public override string ToString()
+        {
+            return $"Name: {Name}, Mobile: {Mobile}, Address: {Address}, Club Member: {ClubMember}, ID: {Id}";
         }
     }
 }

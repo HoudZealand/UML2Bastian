@@ -1,5 +1,6 @@
 ﻿using PizzaLib.Data;
 using PizzaLib.Interfaces;
+using PizzaLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace PizzaLib.Services
     public class CustomerRepository : ICustomerRepository
     {
         private Dictionary<string, ICustomer> _customers;
-        public int Count => throw new NotImplementedException();
+        public int Count { get { return _customers.Count; } }
         public CustomerRepository()
         {
             _customers = MockData.CustomerData;
@@ -17,27 +18,50 @@ namespace PizzaLib.Services
 
         public void PrintAllCustomers()
         {
-            throw new NotImplementedException();
+            foreach(ICustomer c in _customers.Values)
+            {
+                Console.WriteLine(c.ToString());
+            }
         }
 
         public void RemoveCustomer(string mobile)
         {
-            throw new NotImplementedException();
+            if (_customers.ContainsKey(mobile)) _customers.Remove(mobile);
         }
 
-        void ICustomerRepository.AddCustomer(ICustomer customer)
+        public void AddCustomer(ICustomer customer)
         {
-            throw new NotImplementedException();
+            if (!_customers.ContainsKey(customer.Mobile)) _customers.Add(customer.Mobile, customer);
         }
 
-        List<ICustomer> ICustomerRepository.GetAll()
+        public List<ICustomer> GetAll()
         {
-            throw new NotImplementedException();
+            List<ICustomer> customers = new List<ICustomer>();
+
+            foreach(ICustomer c in _customers.Values)
+            {
+                customers.Add(c);
+            }
+
+            return customers;
         }
 
-        ICustomer ICustomerRepository.GetCustomerByMobile(string mobile)
+        public List<ICustomer> GetMembers()
         {
-            throw new NotImplementedException();
+            List<ICustomer> members = new List<ICustomer>();
+
+            foreach(ICustomer c in _customers.Values)
+            {
+                if (c.ClubMember) members.Add(c);
+            }
+
+            return members;
+        }
+
+        public ICustomer GetCustomerByMobile(string mobile)
+        {
+            if (_customers.ContainsKey(mobile)) return _customers[mobile];
+            else throw new NullReferenceException("Customer does not exist in repository!");
         }
     }
 }

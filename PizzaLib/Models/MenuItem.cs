@@ -16,13 +16,13 @@ namespace PizzaLib.Models
                 return globalId; 
             } 
         }
-        public string Description { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Description { get; set; }
+        public string Name { get; set; }
 
         public int No { get; }
 
-        public double Price { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public MenuType TheMenuType { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public double Price { get; set; }
+        public MenuType TheMenuType { get; set; }
 
         public MenuItem(string name, double price, string description, MenuType menuType)
         {
@@ -31,6 +31,11 @@ namespace PizzaLib.Models
             Description = description;
             TheMenuType = menuType;
             No = NewID;
+        }
+
+        public string ToString()
+        {
+            return $"Name: {Name}, Price: {Price}, Number: {No}, Description: {Description}, Menu Type: {TheMenuType}";
         }
     }
 }

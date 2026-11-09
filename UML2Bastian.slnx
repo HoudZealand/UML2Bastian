@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="PizzaLib/PizzaLib.csproj" />
   <Project Path="UML2Bastian/UML2Bastian.csproj" />
+  <Project Path="UML2Console/UML2Console.csproj" Id="8c314bd1-5dd4-431c-8dd9-82078a04c1ac" />
 </Solution>

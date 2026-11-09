@@ -1,5 +1,6 @@
 ﻿using PizzaLib.Data;
 using PizzaLib.Interfaces;
+using PizzaLib.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,7 +10,7 @@ namespace PizzaLib.Services
     public class MenuItemRepository : IMenuItemRepository
     {
         private List<IMenuItem> _menuItems;
-        public int Count => throw new NotImplementedException();
+        public int Count { get { return _menuItems.Count; } }
 
         public MenuItemRepository()
         {
@@ -18,27 +19,57 @@ namespace PizzaLib.Services
 
         public void PrintAllMenuItems()
         {
-            throw new NotImplementedException();
+            foreach(IMenuItem m in _menuItems)
+            {
+                Console.WriteLine(m.ToString());
+            }
         }
 
         public void RemoveMenuItem(int no)
         {
-            throw new NotImplementedException();
+            for(int i = 0; i < Count; i++)
+            {
+                if (_menuItems[i].No == no)
+                {
+                    _menuItems.RemoveAt(i);
+                    return;
+                }
+            }
         }
 
-        void IMenuItemRepository.AddMenuItem(IMenuItem menuItem)
+        public void AddMenuItem(IMenuItem menuItem)
         {
-            throw new NotImplementedException();
+            foreach(IMenuItem m in _menuItems)
+            {
+                if (m.Equals(menuItem)) return;
+            }
+            _menuItems.Add(menuItem);
         }
 
-        List<IMenuItem> IMenuItemRepository.GetAll()
+        public List<IMenuItem> GetAll()
         {
-            throw new NotImplementedException();
+            return _menuItems;
+        }
+        
+        public List<IMenuItem> GetItemsByType(MenuType menuType)
+        {
+            List<IMenuItem> items = new List<IMenuItem>();
+
+            foreach(IMenuItem i in _menuItems)
+            {
+                if (i.TheMenuType == menuType) items.Add(i);
+            }
+
+            return items;
         }
 
-        IMenuItem IMenuItemRepository.GetMenuItemByNo(int no)
+        public IMenuItem GetMenuItemByNo(int no)
         {
-            throw new NotImplementedException();
+            foreach(IMenuItem m in _menuItems)
+            {
+                if (m.No == no) return m;
+            }
+            throw new NullReferenceException("Item does not exist in repo!");
         }
     }
 }
