@@ -105,7 +105,7 @@ namespace PizzaLib.Services
             throw new NullReferenceException("Item does not exist in repo!");
         }
 
-        public void PrintMenu()
+        public void PrintSortedMenu()
         {
             MenuType[] menuTypes =
             {

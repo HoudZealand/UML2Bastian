@@ -12,7 +12,7 @@ namespace PizzaLib.Interfaces
         List<IMenuItem> GetItemsByType(MenuType menuType);
         IMenuItem GetMostExpensiveByType(MenuType menuType);
         IMenuItem GetMostExpensiveByType(MenuType[] menuTypes);
-        void PrintMenu();
+        void PrintSortedMenu();
         void AddMenuItem(IMenuItem menuItem);
         IMenuItem GetMenuItemByNo(int no);
         void RemoveMenuItem(int no);

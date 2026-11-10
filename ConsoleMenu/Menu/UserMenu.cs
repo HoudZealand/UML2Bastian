@@ -1,16 +1,28 @@
-﻿using PizzaLib.Services;
+﻿using ConsoleMenu.Controllers.Customers;
 using ConsoleMenu.Controllers.MenuItems;
-using ConsoleMenu.Controllers.Customers;
+using PizzaLib.Interfaces;
+using PizzaLib.Models;
+using PizzaLib.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using PizzaLib.Models;
 
 namespace ConsoleMenu.Menu
 {
     public class UserMenu
     {
-        private static string mainMenuChoices = "\t1.Vis Pizzamenu\n\t2.Vis Kunder\n\t3.Add Customer\n\t4.Add Menu Item\n\tQ.Afslut\n\n\tIndtast valg:";
+        private static string mainMenuChoices = "\t1.Vis Pizzamenu\n\t" +
+                                                "2.Vis Kunder\n\t" +
+                                                "3.Add Customer\n\t" +
+                                                "4.Add Menu Item\n\t" +
+                                                "5.Vis liste af klubmedlemmer\n\t" +
+                                                "6.Vis liste af kunder i givent område\n\t" +
+                                                "7.Vis liste af menuitems af type\n\t" +
+                                                "8.Vis dyreste menuitem af type\n\t" +
+                                                "9.Vis dyreste menuitem mellem flere typer\n\t" +
+                                                "10.Vis menu sorteret efter type\n\t" +
+                                                "Q.Afslut\n\n\t" +
+                                                "Indtast valg:";
 
         private CustomerRepository _customerRepository = new CustomerRepository();
         private MenuItemRepository _menuItemRepository = new MenuItemRepository();
@@ -31,14 +43,12 @@ namespace ConsoleMenu.Menu
                 {
                     case "1":
                         Console.WriteLine("Valg 1");
-                        ShowMenuItemController showMenuItemController = new ShowMenuItemController(_menuItemRepository);
-                        showMenuItemController.ShowAllMenuItems();
+                        _menuItemRepository.PrintAllMenuItems();
                         Console.ReadLine();
                         break;
                     case "2":
                         Console.WriteLine("Valg 2");
-                        ShowCustomerController showCustomerController = new ShowCustomerController(_customerRepository);
-                        showCustomerController.ShowAllCustomers();
+                        _customerRepository.PrintAllCustomers();
                         Console.ReadLine();
                         break;
                     case "3":
@@ -85,22 +95,82 @@ namespace ConsoleMenu.Menu
                         addMenuItemController.AddMenuItem();
                         break;
                     case "5":
-                        //TODO - Find alle clubmembers
+                        Console.WriteLine("Valg 5");
+                        List<ICustomer> members = _customerRepository.GetMembers();
+                        foreach(ICustomer i in members)
+                        {
+                            Console.WriteLine(i.ToString());
+                        }
+                        Console.ReadLine();
                         break;
                     case "6":
-                        //TODO - Find alle customers fra et givent område
+                        Console.WriteLine("Valg 6");
+                        Console.WriteLine("Indlæs område:");
+                        List<ICustomer> cInArea = _customerRepository.GetByArea(Console.ReadLine());
+                        foreach (ICustomer i in cInArea)
+                        {
+                            Console.WriteLine(i.ToString());
+                        }
+                        Console.ReadLine();
                         break;
                     case "7":
-                        //TODO - Find alle menu items af given menutype
+                        Console.WriteLine("Valg 7");
+                        Console.WriteLine("Indlæs menutype:");
+                        while (!Enum.TryParse(Console.ReadLine(), out menuType))
+                        {
+                            Console.WriteLine("Invalid menutype");
+                            Console.WriteLine("Indlæs menutype:");
+                        }
+                        List<IMenuItem> itemsByType = _menuItemRepository.GetItemsByType(menuType);
+                        foreach(IMenuItem i in itemsByType)
+                        {
+                            Console.WriteLine(i.ToString());
+                        }
+                        Console.ReadLine();
                         break;
                     case "8":
-                        //TODO - Find den dyreste item indenfor en given menutype
+                        Console.WriteLine("Valg 8");
+                        Console.WriteLine("Indlæs menutype:");
+                        while (!Enum.TryParse(Console.ReadLine(), out menuType))
+                        {
+                            Console.WriteLine("Invalid menutype");
+                            Console.WriteLine("Indlæs menutype:");
+                        }
+
+                        IMenuItem expensiveByType = _menuItemRepository.GetMostExpensiveByType(menuType);
+                        Console.WriteLine(expensiveByType.ToString());
+                        Console.ReadLine();
                         break;
                     case "9":
-                        //TODO - Find den dyreste item bland flere givne menutyper
+                        Console.WriteLine("Valg 9");
+                        Console.WriteLine("Indlæs mængde af menutyper:");
+                        int amount = 0;
+                        while (!int.TryParse(Console.ReadLine(), out amount))
+                        {
+                            Console.WriteLine("Indlæs mængde af menutyper:");
+                        }
+
+                        MenuType[] menuTypes = new MenuType[amount];
+
+                        for (int i = 0; i < amount; i++)
+                        {
+                            Console.WriteLine("Indlæs menutype:");
+                            while (!Enum.TryParse(Console.ReadLine(), out menuType))
+                            {
+                                Console.WriteLine("Invalid menutype");
+                                Console.WriteLine("Indlæs menutype:");
+                            }
+                            menuTypes[i] = menuType;
+                        }
+
+                        expensiveByType = _menuItemRepository.GetMostExpensiveByType(menuTypes);
+                        Console.WriteLine(expensiveByType.ToString());
+                        Console.ReadLine();
                         break;
                     case "10":
-                        //TODO - Udskriv sorteret menukort
+                        Console.WriteLine("Valg 10");
+                        _menuItemRepository.PrintSortedMenu();
+                        Console.ReadLine();
                         break;
                     default:
                         Console.WriteLine("Angiv et tal fra 1..4 eller q for afslut");

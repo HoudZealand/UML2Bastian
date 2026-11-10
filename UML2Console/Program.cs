@@ -48,7 +48,7 @@ Console.WriteLine(expensivePizzeClassische.ToString());
 Console.WriteLine();
 
 Console.WriteLine("---Get Sorted Menu Test---");
-mRepo.PrintMenu();
+mRepo.PrintSortedMenu();
 
 Console.WriteLine();
 Console.WriteLine("---TryParse Enum Test---");
