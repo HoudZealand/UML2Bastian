@@ -63,6 +63,39 @@ namespace PizzaLib.Services
             return items;
         }
 
+        public IMenuItem GetMostExpensiveByType(MenuType menuType)
+        {
+            IMenuItem item = new MenuItem("dummy", double.MinValue, "dummy", menuType);
+            List<IMenuItem> items = GetItemsByType(menuType);
+
+            foreach(IMenuItem i in items)
+            {
+                if (i.Price > item.Price) item = i;
+            }
+
+            return item;
+        }
+        public IMenuItem GetMostExpensiveByType(MenuType[] menuType)
+        {
+            IMenuItem item = new MenuItem("dummy", double.MinValue, "dummy", menuType[0]);
+            List<IMenuItem> items = new List<IMenuItem>();
+            foreach(MenuType t in menuType)
+            {
+                List<IMenuItem> temp = GetItemsByType(t);
+                foreach(IMenuItem i in temp)
+                {
+                    items.Add(i);
+                }
+            }
+
+            foreach (IMenuItem i in items)
+            {
+                if (i.Price > item.Price) item = i;
+            }
+
+            return item;
+        }
+
         public IMenuItem GetMenuItemByNo(int no)
         {
             foreach(IMenuItem m in _menuItems)
@@ -70,6 +103,30 @@ namespace PizzaLib.Services
                 if (m.No == no) return m;
             }
             throw new NullReferenceException("Item does not exist in repo!");
+        }
+
+        public void PrintMenu()
+        {
+            MenuType[] menuTypes =
+            {
+                MenuType.PIZZECLASSICHE,
+                MenuType.PIZZESPECIALI,
+                MenuType.PASTAALFORNO,
+                MenuType.BRUCHETTA_CROSTINO,
+                MenuType.SANDWICHES,
+                MenuType.SALATER,
+                MenuType.TILBEHØR
+            };
+            Console.WriteLine("---MENU---");
+            foreach(MenuType m in menuTypes)
+            {
+                List<IMenuItem> items = GetItemsByType(m);
+                Console.WriteLine($"---{m.ToString()}---");
+                foreach(IMenuItem i in items)
+                {
+                    Console.WriteLine(i.ToString());
+                }
+            }
         }
     }
 }

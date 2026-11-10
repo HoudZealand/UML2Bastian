@@ -58,6 +58,18 @@ namespace PizzaLib.Services
             return members;
         }
 
+        public List<ICustomer> GetByArea(string area)
+        {
+            List<ICustomer> customers = new List<ICustomer>();
+
+            foreach(ICustomer c in _customers.Values)
+            {
+                if (c.Address.Contains(area)) customers.Add(c);
+            }
+
+            return customers;
+        }
+
         public ICustomer GetCustomerByMobile(string mobile)
         {
             if (_customers.ContainsKey(mobile)) return _customers[mobile];

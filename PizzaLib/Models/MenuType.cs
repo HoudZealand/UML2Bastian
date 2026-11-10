@@ -9,7 +9,7 @@ namespace PizzaLib.Models
         SANDWICHES, 
         BRUCHETTA_CROSTINO, 
         SALATER, 
-        PIZZECLASSSICHE, 
+        PIZZECLASSICHE, 
         PIZZESPECIALI, 
         PASTAALFORNO, 
         TILBEHØR
