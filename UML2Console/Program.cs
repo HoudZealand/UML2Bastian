@@ -1,6 +1,7 @@
 ﻿using PizzaLib.Interfaces;
 using PizzaLib.Models;
 using PizzaLib.Services;
+using PizzaLib.Exceptions;
 
 CustomerRepository cRepo = new CustomerRepository();
 
@@ -57,3 +58,18 @@ if(!Enum.TryParse(Console.ReadLine(), out MenuType menuTypeTest))
     Console.WriteLine("big loss :(");
 }
 Console.WriteLine(menuTypeTest);
+
+try
+{
+    ICustomer vipCustomer = new VIPCustomer("Hans-Henrik Høybye", "879341873", "h h h h h h", 12.5);
+} catch(InvalidDiscountException e){
+    Console.WriteLine(e.Message);
+}
+
+CompanyInfo company = CompanyInfo.Instance;
+company.Name = "john pizza";
+company.CVR = "87634901";
+company.VAT = 7.5;
+company.ClubDiscount = 5;
+
+company.ToString();

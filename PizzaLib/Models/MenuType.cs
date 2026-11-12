@@ -12,6 +12,7 @@ namespace PizzaLib.Models
         PIZZECLASSICHE, 
         PIZZESPECIALI, 
         PASTAALFORNO, 
+        DRIKKEVARE,
         TILBEHØR
     }
 }

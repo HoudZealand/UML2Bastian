@@ -1,5 +1,6 @@
 ﻿using PizzaLib.Data;
 using PizzaLib.Interfaces;
+using PizzaLib.Exceptions;
 using PizzaLib.Models;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,8 @@ namespace PizzaLib.Services
 
         public void AddCustomer(ICustomer customer)
         {
+            if (_customers.ContainsKey(customer.Mobile)) 
+                throw new CustomerMobileNumberExistsException("Customer mobile number is already in repository!");
             if (!_customers.ContainsKey(customer.Mobile)) _customers.Add(customer.Mobile, customer);
         }
 

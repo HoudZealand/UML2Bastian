@@ -33,9 +33,9 @@ namespace PizzaLib.Models
             No = NewID;
         }
 
-        public string ToString()
+        public override string ToString()
         {
-            return $"Name: {Name}, Price: {Price}, Number: {No}, Description: {Description}, Menu Type: {TheMenuType}";
+            return $"Number: {No}, Name: {Name}, Price: {Price}, Description: {Description}, Menu Type: {TheMenuType}";
         }
     }
 }

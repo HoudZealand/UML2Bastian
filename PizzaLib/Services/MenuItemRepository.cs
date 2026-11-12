@@ -65,12 +65,14 @@ namespace PizzaLib.Services
 
         public IMenuItem GetMostExpensiveByType(MenuType menuType)
         {
-            IMenuItem item = new MenuItem("dummy", double.MinValue, "dummy", menuType);
             List<IMenuItem> items = GetItemsByType(menuType);
+            if (items.Count < 1) throw new NullReferenceException($"No menu items of type {menuType}!");
+            
+            IMenuItem item = items[0];
 
-            foreach(IMenuItem i in items)
+            for(int i = 1; i < items.Count; i++)
             {
-                if (i.Price > item.Price) item = i;
+                if (items[i].Price > item.Price) item = items[i];
             }
 
             return item;

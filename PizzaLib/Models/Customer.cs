@@ -34,7 +34,7 @@ namespace PizzaLib.Models
 
         public override string ToString()
         {
-            return $"Name: {Name}, Mobile: {Mobile}, Address: {Address}, Club Member: {ClubMember}, ID: {Id}";
+            return $"ID: {Id}, Name: {Name}, Mobile: {Mobile}, Address: {Address}, Club Member: {ClubMember}";
         }
     }
 }

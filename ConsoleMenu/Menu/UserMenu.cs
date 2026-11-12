@@ -66,8 +66,37 @@ namespace ConsoleMenu.Menu
                         string clubMemberString = Console.ReadLine().ToLower();
                         bool isClubMember = (clubMemberString[0] == 'y') ? true : false;
 
-                        AddCustomerController addCustomerController = new AddCustomerController(customerName, mobile, address, isClubMember, _customerRepository);
-                        addCustomerController.AddCustomer();
+                        Console.WriteLine("Vil du være VIP y/n");
+                        string vipString = Console.ReadLine().ToLower();
+                        bool isVIP = (vipString[0] == 'y') ? true : false;
+
+                        switch (isVIP)
+                        {
+                            case true:
+
+                                Console.WriteLine("Indlæs discount %");
+                                double discount;
+                                while(!double.TryParse(Console.ReadLine(), out discount))
+                                {
+                                    Console.WriteLine("Invalid discount %");
+                                    Console.WriteLine("Indlæs discount %");
+                                }
+                                ICustomer customer = new VIPCustomer(customerName, mobile, address, discount)
+                                {
+                                    ClubMember = isClubMember
+                                };
+                                _customerRepository.AddCustomer(customer);
+
+                                break;
+                            case false:
+
+                                customer = new Customer(customerName, mobile, address)
+                                {
+                                    ClubMember = isClubMember
+                                };
+                                _customerRepository.AddCustomer(customer);
+                                break;
+                        }
                         break;
                     case "4":
                         Console.WriteLine("Valg 4");
@@ -86,13 +115,30 @@ namespace ConsoleMenu.Menu
 
                         Console.WriteLine("Indlæs menutype:");
                         MenuType menuType;
-                        while (!Enum.TryParse(Console.ReadLine(), out menuType))
+                        while (!Enum.TryParse(Console.ReadLine().ToUpper(), out menuType))
                         {
                             Console.WriteLine("Indlæs menutype:");
                         }
 
-                        AddMenuItemController addMenuItemController = new AddMenuItemController(pizzaName, price, desc, menuType, _menuItemRepository);
-                        addMenuItemController.AddMenuItem();
+                        switch (menuType)
+                        {
+                            default:
+
+                                IMenuItem item = new MenuItem(pizzaName, price, desc, menuType);
+                                _menuItemRepository.AddMenuItem(item);
+
+                                break;
+                            case MenuType.DRIKKEVARE:
+
+                                Console.WriteLine($"Har drikkevaren alkohol y/n");
+                                string alcoholString = Console.ReadLine().ToLower();
+                                bool alcohol = (alcoholString[0] == 'y') ? true : false;
+
+                                item = new Beverage(pizzaName, price, desc, alcohol);
+                                _menuItemRepository.AddMenuItem(item);
+
+                                break;
+                        }
                         break;
                     case "5":
                         Console.WriteLine("Valg 5");
@@ -116,7 +162,7 @@ namespace ConsoleMenu.Menu
                     case "7":
                         Console.WriteLine("Valg 7");
                         Console.WriteLine("Indlæs menutype:");
-                        while (!Enum.TryParse(Console.ReadLine(), out menuType))
+                        while (!Enum.TryParse(Console.ReadLine().ToUpper(), out menuType))
                         {
                             Console.WriteLine("Invalid menutype");
                             Console.WriteLine("Indlæs menutype:");
@@ -131,7 +177,7 @@ namespace ConsoleMenu.Menu
                     case "8":
                         Console.WriteLine("Valg 8");
                         Console.WriteLine("Indlæs menutype:");
-                        while (!Enum.TryParse(Console.ReadLine(), out menuType))
+                        while (!Enum.TryParse(Console.ReadLine().ToUpper(), out menuType))
                         {
                             Console.WriteLine("Invalid menutype");
                             Console.WriteLine("Indlæs menutype:");
