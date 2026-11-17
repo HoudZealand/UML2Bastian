@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Linq;
 
 namespace PizzaLib.Models
 {
@@ -36,6 +37,14 @@ namespace PizzaLib.Models
         public override string ToString()
         {
             return $"Number: {No}, Name: {Name}, Price: {Price}, Description: {Description}, Menu Type: {TheMenuType}";
+        }
+
+        public void UpdateItem(IMenuItem update)
+        {
+            Name = update.Name;
+            Price = update.Price;
+            Description = update.Description;
+            TheMenuType = update.TheMenuType;
         }
     }
 }

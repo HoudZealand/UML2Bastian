@@ -13,6 +13,7 @@ namespace PizzaLib.Interfaces
         double Price { get; set; }
         MenuType TheMenuType { get; set; }
 
+        void UpdateItem(IMenuItem update);
         string ToString();
 
     }

@@ -12,6 +12,7 @@ namespace PizzaLib.Interfaces
         string Mobile { get; set; }
         string Name { get; set; }
 
+        void UpdateCustomer(ICustomer update);
         string ToString();
 
     }

@@ -10,6 +10,7 @@ namespace PizzaLib.Interfaces
         int Count { get; }
         List<IMenuItem> GetAll();
         List<IMenuItem> GetItemsByType(MenuType menuType);
+        List<IMenuItem> GetItemsInPriceRange(double min, double max);
         IMenuItem GetMostExpensiveByType(MenuType menuType);
         IMenuItem GetMostExpensiveByType(MenuType[] menuTypes);
         void PrintSortedMenu();

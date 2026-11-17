@@ -36,5 +36,13 @@ namespace PizzaLib.Models
         {
             return $"ID: {Id}, Name: {Name}, Mobile: {Mobile}, Address: {Address}, Club Member: {ClubMember}";
         }
+
+        public void UpdateCustomer(ICustomer update)
+        {
+            Name = update.Name;
+            Mobile = update.Mobile;
+            Address = update.Address;
+            ClubMember = update.ClubMember;
+        }
     }
 }

@@ -77,6 +77,20 @@ namespace PizzaLib.Services
 
             return item;
         }
+        public List<IMenuItem> GetItemsInPriceRange(double min, double max)
+        {
+            List<IMenuItem> itemsInRange = new List<IMenuItem>();
+
+            foreach(IMenuItem i in _menuItems)
+            {
+                if(i.Price >= min && i.Price <= max)
+                {
+                    itemsInRange.Add(i);
+                }
+            }
+
+            return itemsInRange;
+        }
         public IMenuItem GetMostExpensiveByType(MenuType[] menuType)
         {
             IMenuItem item = new MenuItem("dummy", double.MinValue, "dummy", menuType[0]);
