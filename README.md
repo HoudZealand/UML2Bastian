@@ -1,5 +1,5 @@
 # UML Design-Class-Diagram:
-[EMBED BILLEDE HER]
+![](DSD-UMLII.png)
 
 Dette diagram detaljerer MenuItemRepository-klassens GetItemsByType metode (linje 54-64 i MenuItemRepository).
 # Video:
