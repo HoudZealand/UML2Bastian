@@ -1,6 +1,6 @@
 # Klassediagram:
 
-![](DCD-UMLII.PNG)
+![](DCD-UMLII.png)
 
 # Sekvens Diagram:
 
