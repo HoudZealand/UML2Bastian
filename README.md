@@ -1,4 +1,8 @@
-# Design-Sekvens-Diagram:
+# Klassediagram:
+
+![](DCD-UMLII.PNG)
+
+# Sekvens Diagram:
 
 Dette diagram detaljerer MenuItemRepository-klassens GetItemsByType metode (linje 54-64 i MenuItemRepository).
 ![](DSD-UMLII.png)
