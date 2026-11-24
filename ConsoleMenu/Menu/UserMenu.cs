@@ -21,6 +21,7 @@ namespace ConsoleMenu.Menu
                                                 "8.Vis dyreste menuitem af type\n\t" +
                                                 "9.Vis dyreste menuitem mellem flere typer\n\t" +
                                                 "10.Vis menu sorteret efter type\n\t" +
+                                                "11.Lav ny ordre\n\t" +
                                                 "Q.Afslut\n\n\t" +
                                                 "Indtast valg:";
 
@@ -42,16 +43,19 @@ namespace ConsoleMenu.Menu
                 switch (theChoice)
                 {
                     case "1":
+                        // Print all MenuItems
                         Console.WriteLine("Valg 1");
                         _menuItemRepository.PrintAllMenuItems();
                         Console.ReadLine();
                         break;
                     case "2":
+                        // Print all Customers
                         Console.WriteLine("Valg 2");
                         _customerRepository.PrintAllCustomers();
                         Console.ReadLine();
                         break;
                     case "3":
+                        // Create new Customer
                         Console.WriteLine("Valg 3");
                         Console.WriteLine("Indlæs navn:");
                         string customerName = Console.ReadLine();
@@ -99,6 +103,7 @@ namespace ConsoleMenu.Menu
                         }
                         break;
                     case "4":
+                        // Create new MenuItem
                         Console.WriteLine("Valg 4");
                         Console.WriteLine("Indlæs navn:");
                         string pizzaName = Console.ReadLine();
@@ -141,6 +146,7 @@ namespace ConsoleMenu.Menu
                         }
                         break;
                     case "5":
+                        // Get all club members
                         Console.WriteLine("Valg 5");
                         List<ICustomer> members = _customerRepository.GetMembers();
                         foreach(ICustomer i in members)
@@ -150,6 +156,7 @@ namespace ConsoleMenu.Menu
                         Console.ReadLine();
                         break;
                     case "6":
+                        // Get customer by area
                         Console.WriteLine("Valg 6");
                         Console.WriteLine("Indlæs område:");
                         List<ICustomer> cInArea = _customerRepository.GetByArea(Console.ReadLine());
@@ -160,6 +167,7 @@ namespace ConsoleMenu.Menu
                         Console.ReadLine();
                         break;
                     case "7":
+                        // Get items by MenuType
                         Console.WriteLine("Valg 7");
                         Console.WriteLine("Indlæs menutype:");
                         while (!Enum.TryParse(Console.ReadLine().ToUpper(), out menuType))
@@ -175,6 +183,7 @@ namespace ConsoleMenu.Menu
                         Console.ReadLine();
                         break;
                     case "8":
+                        // Get most expensive by MenuType
                         Console.WriteLine("Valg 8");
                         Console.WriteLine("Indlæs menutype:");
                         while (!Enum.TryParse(Console.ReadLine().ToUpper(), out menuType))
@@ -188,6 +197,7 @@ namespace ConsoleMenu.Menu
                         Console.ReadLine();
                         break;
                     case "9":
+                        // Get most expensive by multiple MenuTypes
                         Console.WriteLine("Valg 9");
                         Console.WriteLine("Indlæs mængde af menutyper:");
                         int amount = 0;
@@ -214,8 +224,71 @@ namespace ConsoleMenu.Menu
                         Console.ReadLine();
                         break;
                     case "10":
+                        // Print sorted menu
                         Console.WriteLine("Valg 10");
                         _menuItemRepository.PrintSortedMenu();
+                        Console.ReadLine();
+                        break;
+                    case "11":
+                        // Create new Order
+                        Console.WriteLine("Valg 11");
+                        Console.WriteLine("Tilføj item ved nummer eller tryk 'q' for at fortsætte.");
+                        _menuItemRepository.PrintAllMenuItems();
+                        string input = ".";
+                        List<IMenuItem> items = new List<IMenuItem>();
+                        while (input[0] != 'q')
+                        {
+                            input = Console.ReadLine();
+                            if(int.TryParse(input, out int num))
+                            {
+                                try
+                                {
+                                    IMenuItem item = _menuItemRepository.GetMenuItemByNo(num);
+                                    items.Add(item);
+                                    Console.WriteLine($"Added {item.Name}");
+                                } catch(ArgumentException e)
+                                {
+                                    Console.WriteLine("Item does not exist.");
+                                }
+                            }
+                        }
+                        Console.WriteLine("Vil du tilføje en kunde? y/n");
+                        string addCustomerString = Console.ReadLine();
+                        bool addCustomer = (addCustomerString[0] == 'y') ? true : false;
+                        Order order;
+
+                        switch (addCustomer)
+                        {
+                            case true:
+                                {
+                                    Console.WriteLine("Tilføj kunde ved ID.");
+                                    _customerRepository.PrintAllCustomers();
+                                    ICustomer? customerToAdd = null;
+                                    while (customerToAdd == null)
+                                    {
+                                        int idInput;
+                                        while (!int.TryParse(Console.ReadLine(), out idInput))
+                                        {
+                                            Console.WriteLine("Invalid input");
+                                        }
+                                        customerToAdd = _customerRepository.GetCustomerByID(idInput);
+                                    }
+                                    order = new Order(customerToAdd);
+                                    break;
+                                }
+                            case false:
+                                {
+                                    order = new Order();
+                                    break;
+                                }
+                        }
+
+                        foreach(IMenuItem item in items)
+                        {
+                            order.Items.Add(item);
+                        }
+
+                        order.PrintOrder();
                         Console.ReadLine();
                         break;
                     default:

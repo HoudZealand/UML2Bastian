@@ -66,7 +66,7 @@ namespace PizzaLib.Services
         public IMenuItem GetMostExpensiveByType(MenuType menuType)
         {
             List<IMenuItem> items = GetItemsByType(menuType);
-            if (items.Count < 1) throw new NullReferenceException($"No menu items of type {menuType}!");
+            if (items.Count < 1) throw new ArgumentException($"No menu items of type {menuType}!");
             
             IMenuItem item = items[0];
 
@@ -118,7 +118,7 @@ namespace PizzaLib.Services
             {
                 if (m.No == no) return m;
             }
-            throw new NullReferenceException("Item does not exist in repo!");
+            throw new ArgumentException("Item does not exist in repo!");
         }
 
         public void PrintSortedMenu()

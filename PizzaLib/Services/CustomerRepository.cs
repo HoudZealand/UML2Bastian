@@ -78,5 +78,14 @@ namespace PizzaLib.Services
             if (_customers.ContainsKey(mobile)) return _customers[mobile];
             else throw new NullReferenceException("Customer does not exist in repository!");
         }
+        
+        public ICustomer? GetCustomerByID(int id)
+        {
+            foreach(ICustomer i in _customers.Values)
+            {
+                if (i.Id == id) return i;
+            }
+            return null;
+        }
     }
 }
